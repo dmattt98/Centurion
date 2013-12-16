@@ -31,14 +31,8 @@ Crafty.scene('Game', function() {
     }
     
     // Place down 3 barriers
-    var max_villages = 5;
-    for(var x = 0; x < Game.map_grid.width; x++) {
-        for(var y = 0; y < Game.map_grid.height; y++) {
-            if(Math.random() < 0.02) {
-                if(Crafty('Barrier').length < max_villages && !this.occupied[x][y]) {
-                    Crafty.e('Barrier').at(x, y);
-                }
-            }
-        }
+    var loc_barriers = [[8, 16], [16, 8], [32, 8]];
+    for(var i = 0; i < loc_barriers.length; i++) {
+        Crafty.e('Barrier').at(loc_barriers[i][0], loc_barriers[i][1]);
     }
 });

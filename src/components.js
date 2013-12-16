@@ -62,7 +62,7 @@ Crafty.c('PlayerCharacter', {
     // Registers a stop-movement function to be called when
     //  this entity hits an entity with the "Solid" component
     stopOnSolids: function() {
-        this.onHit('Barrier', this.stopMovement);
+        this.onHit('Solid', this.stopMovement);
         return this;
     },
     
@@ -89,7 +89,7 @@ Crafty.c('PlayerCharacter', {
 // A village is a tile on the grid that the PC must visit in order to win the game
 Crafty.c('Barrier', {
     init: function() {
-        this.requires('Actor, Color')
+        this.requires('Actor, Color, Solid')
             .color('rgb(170, 125, 40)');
         this.attr({
             w: Game.map_grid.tile.width,
