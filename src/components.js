@@ -36,8 +36,8 @@ Crafty.c('Actor', {
 // The Player
 Crafty.c('Player', {
     init: function() {
-        this.requires('Actor, spr_player, Color, fourway, Collision')
-            .color('rgb(200, 200, 200)')
+        this.requires('Actor, spr_player, Multiway, Collision')
+            .multiway({W: -90, S: 90, D: 0, A: 180})
             .die();
     },
     
