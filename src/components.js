@@ -37,7 +37,7 @@ Crafty.c('Actor', {
 Crafty.c('Player', {
     init: function() {
         this.requires('Actor, spr_player, Multiway, Collision')
-            .multiway({W: -90, S: 90, D: 0, A: 180})
+            .multiway(3, {W: -90, S: 90, D: 0, A: 180})
             .die();
     },
     
@@ -52,16 +52,28 @@ Crafty.c('Player', {
 
 Crafty.c('Enemy', {
     init: function() {
-        this.requires('Actor, spr_enemy, Collision')
+        this.requires('Actor, spr_enemy')
             //.color('rgb(200, 20, 25)')
             .wrap();
     },
     
     wrap: function() {
+        var _speed = Math.floor(Math.random() * 10);
         this.bind('EnterFrame', function() {
-            this.x -= 4;
+            this.x -= _speed;
             if(this.x < 0)
                 this.x = 50 * 19;
         });
+    }
+});
+
+Crafty.c('Coin', {
+    init: function() {
+        this.requires('Actor, spr_coin, Collision')
+            .collect();
+    },
+    
+    collect: function() {
+        this.onHit('Player', function() { this.destroy(); });
     }
 });

@@ -11,10 +11,15 @@ Crafty.scene('Game', function() {
     
     Crafty.e('Player').at(5, 5);
     
-    for(var i = 0; i < 20; i++) {
+    for(var i = 0; i < 35; i++) {
         var x = Math.floor(Math.random() * 47) + 43,
             y = Math.floor(Math.random() * 33) + 3;
         Crafty.e('Enemy').at(x, y);
+    }
+    
+    pos_coins = [[13, 3], [26, 7], [5, 20], [39, 20], [29, 29]];
+    for(var i = 0; i < pos_coins.length; i++) {
+        Crafty.e('Coin').at(pos_coins[i][0], pos_coins[i][1]);
     }
 });
 
@@ -28,7 +33,8 @@ Crafty.scene('Loading', function() {
   Crafty.load(['assets/Untitled.png'], function() {
         Crafty.sprite(16, 'assets/Untitled.png', {
             spr_enemy: [0,0],
-            spr_player: [1,0] 
+            spr_player: [1,0],
+            spr_coin: [0,1]
         });
 
         Crafty.scene('Game');
