@@ -68,7 +68,7 @@ Crafty.c('Enemy', {
             this.x -= _speed;
             if(this.x < 0) {
                 this.x = 50 * 19;
-                this.y = Math.floor(Math.random() * 576);
+                this.y = Math.floor(Math.random() * 554) + 16;
             }
         });
     }
