@@ -24,6 +24,18 @@ Game = {
     // Creates a score for the player
     score: 0,
     
+    // Number of coins the player has
+    coin: 0,
+    
+    // Number of coins on the map
+    coins: 0,
+    
+    // Number of keys the player has
+    key: 0,
+    
+    // Total Keys on the map
+    keys: 0,
+    
     // Initialize and start our game
     start: function () {
         // Start Crafty and set a background color so we can see it is working

@@ -1,5 +1,8 @@
 Crafty.scene('Game', function() {
     
+    Game.keys = 1;
+    Game.coins = 5;
+    
     // A 2D array to keep track of all the occupied tiles
     this.occupied = new Array(Game.map_grid.width);
     for(var i = 0; i < Game.map_grid.width; i++) {
@@ -8,6 +11,8 @@ Crafty.scene('Game', function() {
             this.occupied[i][y] = false;
         }
     }
+    
+    Crafty.e('Door').at(5,5);
     
     Crafty.e('Player').at(5, 5);
     
@@ -40,7 +45,7 @@ Crafty.scene('Game', function() {
         x: 32,
         y: 32
     }).textColor('#ffffff').bind('EnterFrame', function() {
-        this.text('Coins: ' + Game.score + '/5');
+        this.text('Coins: ' + Game.coin + '/' +Game.coins  + '<br/>Keys: ' + Game.key + '/' + Game.keys);
     });
 });
 
@@ -57,7 +62,8 @@ Crafty.scene('Loading', function() {
             spr_player: [1,0],
             spr_coin: [0,1],
             spr_key: [1,1],
-            spr_hedge: [0,2]
+            spr_hedge: [0,2],
+            spr_door: [1, 2]
         });
 
         Crafty.scene('Main');
@@ -77,7 +83,7 @@ Crafty.scene('Main', function() {
 });
 
 Crafty.scene('Lose', function() {
-    Crafty.e('2D, DOM, Text').text('You lost!<br/>You got ' + Game.score + '/5 coins<br/>Press ENTER to restart').attr({
+    Crafty.e('2D, DOM, Text').text('You lost!<br/>You got ' + Game.coin + '/' + Game.coins + ' coins<br/>Press ENTER to restart').attr({
         x: 0,
         y: Game.height() / 2 - 24,
         w: Game.width()
@@ -86,4 +92,16 @@ Crafty.scene('Lose', function() {
             Crafty.scene('Game');
         }
     }).unselectable();;
+});
+
+Crafty.scene('Win', function() {
+    Crafty.e('2D, DOM, Text').text('You Won!<br/>You got ' + Game.coin + '/' + Game.coins + ' coins<br/>Press ENTER to restart').attr({
+        x: 0,
+        y: Game.height() / 2 - 24,
+        w: Game.width()
+    }).textColor('#ffffff').bind('KeyDown', function(e) {
+        if(e.key == Crafty.keys['ENTER']) {
+            Crafty.scene('Game');
+        }
+    });
 });

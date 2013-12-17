@@ -42,8 +42,9 @@ Crafty.c('Player', {
     },
 
     die: function() {
-        this.onHit('Enemy', function() { this.destroy(); Crafty.scene('Lose'); Game.score = 0; });
+        this.onHit('Enemy', function() { this.destroy(); Crafty.scene('Lose'); Game.score = 0; Game.key = 0; });
         this.onHit('Hedge', this.stopMovement);
+        this.onHit('Door', function() { if(Game.key == Game.keys) { Crafty.scene('Win'); Game.score = 0; Game.key = 0; } });
     },
     
     stopMovement: function() {
@@ -58,7 +59,6 @@ Crafty.c('Player', {
 Crafty.c('Enemy', {
     init: function() {
         this.requires('Actor, spr_enemy')
-            //.color('rgb(200, 20, 25)')
             .wrap();
     },
     
@@ -81,7 +81,7 @@ Crafty.c('Coin', {
     },
     
     collect: function() {
-        this.onHit('Player', function() { this.destroy(); Game.score++; });
+        this.onHit('Player', function() { this.destroy(); Game.coin++; });
     }
 });
 
@@ -92,12 +92,18 @@ Crafty.c('Key', {
     },
     
     collect: function() {
-        this.onHit('Player', function() { this.destroy(); });
+        this.onHit('Player', function() { this.destroy(); Game.key++ });
     }
 });
 
 Crafty.c('Hedge', {
     init: function() {
         this.requires('Actor, spr_hedge');
+    }
+});
+
+Crafty.c('Door', {
+    init: function() {
+        this.requires('Actor, spr_door');
     }
 });
