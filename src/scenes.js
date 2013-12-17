@@ -9,8 +9,9 @@ Crafty.scene('Game', function() {
         }
     }
     
+    this.sword = Crafty.e('Sword').at(6, 16);
     // Player character, placed at 5, 5 on our grid
-    this.player = Crafty.e('PlayerCharacter').at(5, 5);
+    this.player = Crafty.e('PlayerCharacter').at(5, 16);
     this.occupied[this.player.at().x][this.player.at().y] = true;
     
     // Place a tree at every edge square on our grid of 16x16 tiles
@@ -22,17 +23,22 @@ Crafty.scene('Game', function() {
                 // Place a tree entity at the current tile
                 Crafty.e('Tree').at(x, y);
                 this.occupied[x][y] = true;
-            } else if (Math.random() < 0.06 && !this.occupied[x][y]) {
+            } else if (x == 45 && !this.occupied[x][y] && y > 3 && y < 32 && Math.random() <= 0.7) {
                 // Place a bush entity at the current tile
-                Crafty.e('Enemy').at(x, y);
-                this.occupied[x][y] = true;
+                var rx = Math.floor(Math.random() * 47)  + 43;
+                Crafty.e('Enemy').at(rx, y);
+                this.occupied[45][y] = true;
             }
         }
     }
     
     // Place down 3 barriers
-    var loc_barriers = [[8, 16], [16, 8], [32, 8]];
+    var loc_barriers = [[8, 24], [16, 8], [32, 16]];
     for(var i = 0; i < loc_barriers.length; i++) {
         Crafty.e('Barrier').at(loc_barriers[i][0], loc_barriers[i][1]);
     }
+});
+
+Crafty.scene('Lose', function() {
+
 });

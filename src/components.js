@@ -43,10 +43,30 @@ Crafty.c('Tree', {
 
 // A Bush is just an Actor with a certian color
 Crafty.c('Enemy', {
+    _speed: -6,
     init: function() {
-        this.requires('Actor, Color')
-            .color('rgb(185, 25, 25)');
+        this.requires('Actor, Color, Solid, Collision')
+            .color('rgb(185, 25, 25)')
+            .stopOnSolids();
     },
+    
+    // Registers a stop-movement function to be called when
+    //  this entity hits an entity with the "Solid" component
+    stopOnSolids: function() {
+        this.bind('EnterFrame', function(e) {
+            this.x += this._speed;
+            if(this.x <= 0) {
+                this.x = 50 * 17;
+            }
+        });
+        this.onHit('Kill', this.removeEnemy);
+        return this;
+    },
+    
+    // Stops the movement
+    removeEnemy: function() {
+        this.destroy();
+    }
 });
 
 // This is the player-controlled Character
@@ -77,23 +97,26 @@ Crafty.c('PlayerCharacter', {
             this.x -= this._movement.x;
             this.y -= this._movement.y;
         }
-    },
-    
-    // Respond the the player visiting a village
-    visitVillage: function(data) {
-        village = data[0].obj;
-        village.collect();
     }
 });
 
 // A village is a tile on the grid that the PC must visit in order to win the game
 Crafty.c('Barrier', {
     init: function() {
-        this.requires('Actor, Color, Solid')
+        this.requires('Actor, Solid, Kill, Color')
             .color('rgb(170, 125, 40)');
         this.attr({
             w: Game.map_grid.tile.width,
             h: Game.map_grid.tile.height * 3
         });
+    }
+});
+
+// The Player's sword
+Crafty.c('Sword', {
+    init: function() {
+        this.requires('Actor, Solid, Kill, Color, Multiway')
+            .color('rgb(127, 127, 127)')
+            .multiway({W: -90, S: 90, D: 0, A: 180});
     }
 });
