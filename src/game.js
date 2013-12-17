@@ -21,6 +21,9 @@ Game = {
         return this.map_grid.height * this.map_grid.tile.height;
     },
     
+    // Creates a score for the player
+    score: 0,
+    
     // Initialize and start our game
     start: function () {
         // Start Crafty and set a background color so we can see it is working

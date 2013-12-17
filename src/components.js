@@ -37,16 +37,12 @@ Crafty.c('Actor', {
 Crafty.c('Player', {
     init: function() {
         this.requires('Actor, spr_player, Multiway, Collision')
-            .multiway(3, {W: -90, S: 90, D: 0, A: 180})
+            .multiway(4, {W: -90, S: 90, D: 0, A: 180})
             .die();
     },
     
     die: function() {
-        this.onHit('Enemy', this.kill);
-    },
-    
-    kill: function() {
-        this.destroy();
+        this.onHit('Enemy', function() { this.destroy(); Crafty.scene('Main'); Game.score = 0; });
     }
 });
 
@@ -58,11 +54,13 @@ Crafty.c('Enemy', {
     },
     
     wrap: function() {
-        var _speed = Math.floor(Math.random() * 10);
+        var _speed = Math.floor(Math.random() * 12);
         this.bind('EnterFrame', function() {
             this.x -= _speed;
-            if(this.x < 0)
+            if(this.x < 0) {
                 this.x = 50 * 19;
+                this.y = Math.floor(Math.random() * 576);
+            }
         });
     }
 });
@@ -70,6 +68,17 @@ Crafty.c('Enemy', {
 Crafty.c('Coin', {
     init: function() {
         this.requires('Actor, spr_coin, Collision')
+            .collect();
+    },
+    
+    collect: function() {
+        this.onHit('Player', function() { this.destroy(); Game.score += 100; console.log(Game.score); });
+    }
+});
+
+Crafty.c('Key', {
+    init: function() {
+        this.requires('Actor, spr_key, Collision')
             .collect();
     },
     

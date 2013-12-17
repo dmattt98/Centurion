@@ -21,6 +21,8 @@ Crafty.scene('Game', function() {
     for(var i = 0; i < pos_coins.length; i++) {
         Crafty.e('Coin').at(pos_coins[i][0], pos_coins[i][1]);
     }
+    
+    Crafty.e('Key').at(45, 32);
 });
 
 Crafty.scene('Loading', function() {
@@ -34,9 +36,22 @@ Crafty.scene('Loading', function() {
         Crafty.sprite(16, 'assets/Untitled.png', {
             spr_enemy: [0,0],
             spr_player: [1,0],
-            spr_coin: [0,1]
+            spr_coin: [0,1],
+            spr_key: [1,1]
         });
 
-        Crafty.scene('Game');
+        Crafty.scene('Main');
     })
+});
+
+Crafty.scene('Main', function() {
+    Crafty.e('2D, DOM, Text').text('Press ENTER to play').attr({
+        x: 0,
+        y: Game.height() / 2 - 24,
+        w: Game.width()
+    }).bind('KeyDown', function(e) {
+        if(e.key == Crafty.keys['ENTER']) {
+            Crafty.scene('Game');
+        }
+    });
 });
