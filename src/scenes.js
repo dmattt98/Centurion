@@ -14,6 +14,8 @@ Crafty.scene('Game', function() {
     
     Crafty.e('Door').at(5,5);
     
+    Crafty.e('Sword').at(5, 5);
+    
     Crafty.e('Player').at(5, 5);
     
     for(var i = 0; i < 35; i++) {
@@ -63,7 +65,8 @@ Crafty.scene('Loading', function() {
             spr_coin: [0,1],
             spr_key: [1,1],
             spr_hedge: [0,2],
-            spr_door: [1, 2]
+            spr_door: [1, 2],
+            spr_sword: [0, 3]
         });
 
         Crafty.scene('Main');

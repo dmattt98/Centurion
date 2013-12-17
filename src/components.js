@@ -58,8 +58,9 @@ Crafty.c('Player', {
 
 Crafty.c('Enemy', {
     init: function() {
-        this.requires('Actor, spr_enemy')
+        this.requires('Actor, spr_enemy, Collision')
             .wrap();
+        this.die();
     },
     
     wrap: function() {
@@ -71,6 +72,10 @@ Crafty.c('Enemy', {
                 this.y = Math.floor(Math.random() * 554) + 16;
             }
         });
+    },
+    
+    die: function() {
+        this.onHit('Sword', function(e) { if(e[0].obj._extended) { this.destroy(); } });
     }
 });
 
@@ -105,5 +110,29 @@ Crafty.c('Hedge', {
 Crafty.c('Door', {
     init: function() {
         this.requires('Actor, spr_door');
+    }
+});
+
+Crafty.c('Sword', {
+    _extended: false,
+    init: function() {
+        this.requires('Actor, spr_sword, Multiway')
+        .multiway(4, {W: -90, S: 90, D: 0, A: 180})
+        .fight();
+    },
+    
+    fight: function() {
+        this.bind('KeyDown', function(e) {
+            if(e.key == 39) {
+                this.x += 16;
+                this._extended = true;
+            }
+        });
+        this.bind('KeyUp', function(e) {
+            if(e.key == 39) {
+                this.x -= 16;
+                this._extended = false;
+            }
+        });
     }
 });
