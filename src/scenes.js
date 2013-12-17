@@ -23,10 +23,29 @@ Crafty.scene('Game', function() {
     }
     
     Crafty.e('Key').at(45, 32);
+    
+    // Place a hedge at every edge square on our grid of 16x16 tiles
+    for (var x = 0; x < Game.map_grid.width; x++) {
+      for (var y = 0; y < Game.map_grid.height; y++) {
+        var at_edge = x == 0 || x == Game.map_grid.width - 1 || y == 0 || y == Game.map_grid.height - 1;
+ 
+        if (at_edge) {
+          // Place a tree entity at the current tile
+          Crafty.e('Hedge').at(x, y);
+        }
+      }
+    }
+    
+    Crafty.e('2D, DOM, Text').attr({
+        x: 32,
+        y: 32
+    }).textColor('#ffffff').bind('EnterFrame', function() {
+        this.text('Coins: ' + Game.score + '/5');
+    });
 });
 
 Crafty.scene('Loading', function() {
-    Crafty.e('2D, DOM, Text').text('Loading; please wait...').attr({
+    Crafty.e('2D, DOM, Text').text('Loading; please wait...').textColor('#ffffff').attr({
         x: 0,
         y: Game.height() / 2 - 24,
         w: Game.width()
@@ -37,7 +56,8 @@ Crafty.scene('Loading', function() {
             spr_enemy: [0,0],
             spr_player: [1,0],
             spr_coin: [0,1],
-            spr_key: [1,1]
+            spr_key: [1,1],
+            spr_hedge: [0,2]
         });
 
         Crafty.scene('Main');
@@ -45,7 +65,7 @@ Crafty.scene('Loading', function() {
 });
 
 Crafty.scene('Main', function() {
-    Crafty.e('2D, DOM, Text').text('Press ENTER to play').attr({
+    Crafty.e('2D, DOM, Text').text('Press ENTER to play').textColor('#ffffff').attr({
         x: 0,
         y: Game.height() / 2 - 24,
         w: Game.width()
@@ -54,4 +74,16 @@ Crafty.scene('Main', function() {
             Crafty.scene('Game');
         }
     });
+});
+
+Crafty.scene('Lose', function() {
+    Crafty.e('2D, DOM, Text').text('You lost!<br/>You got ' + Game.score + '/5 coins<br/>Press ENTER to restart').attr({
+        x: 0,
+        y: Game.height() / 2 - 24,
+        w: Game.width()
+    }).textColor('#ffffff').bind('KeyDown', function(e) {
+        if(e.key == Crafty.keys['ENTER']) {
+            Crafty.scene('Game');
+        }
+    }).unselectable();;
 });

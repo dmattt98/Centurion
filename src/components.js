@@ -40,9 +40,18 @@ Crafty.c('Player', {
             .multiway(4, {W: -90, S: 90, D: 0, A: 180})
             .die();
     },
-    
+
     die: function() {
-        this.onHit('Enemy', function() { this.destroy(); Crafty.scene('Main'); Game.score = 0; });
+        this.onHit('Enemy', function() { this.destroy(); Crafty.scene('Lose'); Game.score = 0; });
+        this.onHit('Hedge', this.stopMovement);
+    },
+    
+    stopMovement: function() {
+        this._speed = 0;
+        if(this._movement) {
+            this.x -= this._movement.x;
+            this.y -= this._movement.y;
+        }
     }
 });
 
@@ -72,7 +81,7 @@ Crafty.c('Coin', {
     },
     
     collect: function() {
-        this.onHit('Player', function() { this.destroy(); Game.score += 100; console.log(Game.score); });
+        this.onHit('Player', function() { this.destroy(); Game.score++; });
     }
 });
 
@@ -84,5 +93,11 @@ Crafty.c('Key', {
     
     collect: function() {
         this.onHit('Player', function() { this.destroy(); });
+    }
+});
+
+Crafty.c('Hedge', {
+    init: function() {
+        this.requires('Actor, spr_hedge');
     }
 });
