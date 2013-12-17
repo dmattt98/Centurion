@@ -42,9 +42,9 @@ Crafty.c('Player', {
     },
 
     die: function() {
-        this.onHit('Enemy', function() { this.destroy(); Crafty.scene('Lose'); Game.score = 0; Game.key = 0; });
+        this.onHit('Enemy', function() { this.destroy(); Crafty.scene('Lose'); Game.coin = 0; Game.key = 0; });
         this.onHit('Hedge', this.stopMovement);
-        this.onHit('Door', function() { if(Game.key == Game.keys) { Crafty.scene('Win'); Game.score = 0; Game.key = 0; } });
+        this.onHit('Door', function() { if(Game.key == Game.keys) { Crafty.scene('Win'); Game.coin = 0; Game.key = 0; } });
     },
     
     stopMovement: function() {
