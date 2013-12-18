@@ -17,7 +17,7 @@ Crafty.scene('Game', function () {
 
     Crafty.e('Player').at(5, 5);
 
-    for (var i = 0; i < 35; i++) {
+    for (var i = 0; i < 40; i++) {
         var x = Math.floor(Math.random() * 47) + 43,
             y = Math.floor(Math.random() * 33) + 3;
         Crafty.e('Enemy').at(x, y);
