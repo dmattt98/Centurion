@@ -65,38 +65,6 @@ Crafty.c('Sword_H', {
     }
 });
 
-Crafty.c('Sword_V', {
-    _extended: false,
-    init: function () {
-        this.requires('2D, Canvas')
-            .fight();
-    },
-    
-    fight: function() {
-        this.z = 0;
-        this.bind('KeyDown', function (e) {
-            if (e.key == 38) {
-                this.move('n', 16);
-                this._extended = true;
-            } else if (e.key == 40) {
-                this.flip('Y');
-                this.move('s', 16);
-                this._extended = true;
-            }
-        });
-        this.bind('KeyUp', function (e) {
-            if (e.key == 38) {
-                this.move('s', 16);
-                this._extended = false;
-            } else if (e.key == 40) {
-                this.unflip('Y');
-                this.move('n', 16);
-                this._extended = false;
-            }
-        }); 
-    }
-});
-
 // The Player
 Crafty.c('Player', {
     init: function () {
@@ -108,7 +76,6 @@ Crafty.c('Player', {
                 A: 180
             })
             .attach(Crafty.e('Weapon, Sword_H, spr_sword_h'))
-            .attach(Crafty.e('Weapon, Sword_V, spr_sword_v'))
             .die();
     },
 
