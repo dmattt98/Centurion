@@ -43,25 +43,11 @@ Crafty.c('Sword_H', {
     fight: function() {
         this.z = 0;
         this.bind('KeyDown', function (e) {
-            if (e.key == 39) {
+            if (e.key == 32) {
                 this.move('e', 16);
-                this._extended = true;
-            } else if (e.key == 37) {
-                this.flip('X');
-                this.move('w', 16);
                 this._extended = true;
             }
         });
-        this.bind('KeyUp', function (e) {
-            if (e.key == 39) {
-                this.move('w', 16);
-                this._extended = false;
-            } else if (e.key == 37) {
-                this.unflip('X');
-                this.move('e', 16);
-                this._extended = false;
-            }
-        }); 
     }
 });
 
