@@ -48,6 +48,12 @@ Crafty.c('Sword_H', {
                 this._extended = true;
             }
         });
+        this.bind('KeyUp', function (e) {
+            if (e.key == 32) {
+                this.move('w', 16);
+                this._extended = false;
+            }
+        }); 
     }
 });
 
